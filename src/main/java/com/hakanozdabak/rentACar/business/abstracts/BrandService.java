@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BrandService {
 
-    void add(Brand brand);
+    Brand add(Brand brand);
 
     Brand update(Brand brand);
 

@@ -16,8 +16,8 @@ public class BrandManager implements BrandService {
     private final BrandRepository brandRepository;
 
     @Override
-    public void add(Brand brand) {
-      this.brandRepository.save(brand);
+    public Brand add(Brand brand) {
+      return this.brandRepository.save(brand);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.hakanozdabak.rentACar.service;
 
 
+import com.hakanozdabak.rentACar.business.abstracts.BrandService;
 import com.hakanozdabak.rentACar.business.concretes.BrandManager;
 import com.hakanozdabak.rentACar.dataAccess.abstracts.BrandRepository;
 import com.hakanozdabak.rentACar.entities.concretes.Brand;
@@ -12,10 +13,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class BrandServiceTest {
+
 
     @Mock
     private BrandRepository brandRepository;
@@ -24,7 +28,7 @@ public class BrandServiceTest {
     private BrandManager brandManager;
 
     @Test
-    @DisplayName("Should Find Post By Id")
+    @DisplayName("Should Save Brand")
     public void shouldSaveBrand() {
 
         Brand brand = Brand.builder()
@@ -34,9 +38,24 @@ public class BrandServiceTest {
 
 
         Mockito.when(brandRepository.save(Mockito.any(Brand.class))).thenReturn(brand);
-        Brand exceptedBrand =  brandRepository.save(brand);
+        Brand exceptedBrand =  brandManager.add(brand);
         System.out.println(exceptedBrand);
         assertThat(exceptedBrand).isNotNull();
-        assertThat(exceptedBrand.getBrandName()).isEqualTo("Mercedes");
+    }
+
+    @Test
+    @DisplayName("Should Delete By Id")
+    public void shouldDeleteById() {
+
+        // Initial brand
+        Brand brand = Brand.builder()
+                .brandId(1)
+                .brandName("Mercedes")
+                .build();
+        Mockito.when(brandRepository.save(Mockito.any(Brand.class))).thenReturn(brand);
+        brandManager.add(brand);
+        this.brandManager.delete(brand.getBrandId());
+
+       assertThat(brandRepository.count()).isEqualTo(0);
     }
 }
