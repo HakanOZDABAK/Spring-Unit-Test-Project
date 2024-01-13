@@ -56,7 +56,7 @@ public class BrandRepositoryTest {
     }
     @Test
     @DisplayName("Show All Brand")
-    public void BrandRepository_DeleteById_ReturnBrandsList(){
+    public void BrandRepository_FindAll_ReturnBrandsList(){
 
         Brand brand1 = Brand.builder()
                 .brandId(6)
